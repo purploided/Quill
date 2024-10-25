@@ -44,16 +44,16 @@ userInputElement.addEventListener('keydown', (event) => {
         typingStarted = false;
 
         if (wordsPerMinute <= 50) {
-            typingText.textContent = "Practice daily with touch typing exercises, focusing on accuracy over speed to build muscle memory and gradually increase your WPM.";
+            typingText.textContent = "Advice: Practice daily with touch typing exercises, focusing on accuracy over speed to build muscle memory and gradually increase your WPM.";
         }
         else if (wordsPerMinute >= 50 && wordsPerMinute <= 70) {
-            typingText.textContent = "Refine your typing rhythm with intermediate drills, focusing on consistent speed and tackling tricky key combinations to boost your accuracy and flow.";
+            typingText.textContent = "Advice: Refine your typing rhythm with intermediate drills, focusing on consistent speed and tackling tricky key combinations to boost your accuracy and flow.";
         }
         else if (wordsPerMinute >= 70 && wordsPerMinute <= 90) {
-            typingText.textContent = "Challenge yourself with advanced typing tests, focusing on speed and accuracy to push your limits and reach your full potential.";
+            typingText.textContent = "Advice: Challenge yourself with advanced typing tests, focusing on speed and accuracy to push your limits and reach your full potential.";
         }
         else {
-            typingText.textContent = "Congratulations! You are a typing master. Keep up the good work and continue to improve your typing skills.";
+            typingText.textContent = "Advice: Congratulations! You are a typing master. Keep up the good work and continue to improve your typing skills.";
         }
     }
 
