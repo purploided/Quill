@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Re-Type</title>
+    <style>
+        @font-face {
+            font-family: 'Moon Bold';
+            src: url('fonts/Moon Bold.otf') format('opentype');
+            font-weight: bold;
+            font-style: normal;
+        }
+        body {
+            font-family: 'Moon Bold';
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .container {
+            text-align: center;
+            background: #fff;
+            width:500px;
+            padding: 0px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .input-area {
+            margin-top: 10px;
+            margin-bottom: 30px;
+        }
+        .input-area input {
+            width: 80%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .dots {
+            width: 30px;
+            height: 30px;
+
+            position: relative;
+            left: 45%;
+            top: 10%;
+
+            transition: transform 0.3s;
+        }
+        .dots:hover {
+            cursor: pointer;
+            transform: scale(1.1);
+        }
+        .pop-out-menu {
+            text-align: center;
+            background: #fff;
+            width:300px;
+            height: 255px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            left:10px;
+        }
+        .htu {
+            font-size: 20px;
+        }
+        .numo {
+            font-size: 16px;
+            font-weight: bold;
+            text-align: left;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <svg fill="#000000" height="800px" width="800px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32.055 32.055" xml:space="preserve" id="dots" class="dots">
+            <g>
+                <path d="M3.968,12.061C1.775,12.061,0,13.835,0,16.027c0,2.192,1.773,3.967,3.968,3.967c2.189,0,3.966-1.772,3.966-3.967   C7.934,13.835,6.157,12.061,3.968,12.061z M16.233,12.061c-2.188,0-3.968,1.773-3.968,3.965c0,2.192,1.778,3.967,3.968,3.967   s3.97-1.772,3.97-3.967C20.201,13.835,18.423,12.061,16.233,12.061z M28.09,12.061c-2.192,0-3.969,1.774-3.969,3.967   c0,2.19,1.774,3.965,3.969,3.965c2.188,0,3.965-1.772,3.965-3.965S30.278,12.061,28.09,12.061z"/>
+            </g>
+            </svg>
+        <h1>Re-Type</h1>
+        <p id="typer">Press Esc to Start..</p>
+        <p id="wpm">WPM: 0</p>
+        <div class="input-area">
+            <input style="font-family: 'Moon Bold';" type="text" id="userInput">
+        </div>
+    </div>
+</body>
+<script src="typetester.js"></script>
+<script src="pop-out-menu.js"></script>
+</html>
