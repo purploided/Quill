@@ -59,6 +59,47 @@ userInputElement.addEventListener('keydown', (event) => {
 
     if (event.key === 'Escape') {
         typingText.textContent = readyText[Math.floor(Math.random() * readyText.length)];
+        // Check what's being typed in the textbox, highlight the words being typed that match the readyText
+
+        const userInput = userInputElement.value;
+        const readyTextWords = typingText.textContent.split(' ');
+        const userWords = userInput.split(' ');
+
+        let highlightedText = '';
+        for (let i = 0; i < readyTextWords.length; i++) {
+            if (userWords[i] && userWords[i].toLowerCase() === readyTextWords[i].toLowerCase()) {
+            highlightedText += `<span style="color: green">${readyTextWords[i]}</span> `;
+            } else {
+            highlightedText += `<span style="color: red">${readyTextWords[i]}</span> `;
+            }
+        }
+
+        typingText.innerHTML = highlightedText;
+
+        // Add a setInterval to check the words
+
+        const intervalId = setInterval(() => {
+            const userInput = userInputElement.value;
+            const userWords = userInput.split(' ');
+
+            let highlightedText = '';
+            for (let i = 0; i < readyTextWords.length; i++) {
+            if (userWords[i] && userWords[i].toLowerCase() === readyTextWords[i].toLowerCase()) {
+                highlightedText += `<span style="color: green">${readyTextWords[i]}</span> `;
+            } else {
+                highlightedText += `<span style="color: red">${readyTextWords[i]}</span> `;
+            }
+            }
+
+            typingText.innerHTML = highlightedText;
+        }, 200); // Check every 200ms
+
+        // Clear the interval when Enter is pressed
+        userInputElement.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+            clearInterval(intervalId);
+            }
+        });
     }
 });
 
@@ -76,4 +117,4 @@ setInterval(() => {
         
         wpm.textContent = `WPM: ${wordsPerMinute.toFixed(0)}`;
     }
-}, 1);
+}, 10);
