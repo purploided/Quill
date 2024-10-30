@@ -72,8 +72,10 @@ const ReType = (() => {
         // Handle key press events for 'Enter' and 'Escape'
 
         if (event.key === 'Enter') {
-            stop();
-            timedReset(cooldownEnabled, cooldownTime);
+            if (typingStarted) {  // Only trigger timedReset if typing has started
+                stop();  // Stop the current typing session
+                timedReset(cooldownEnabled, cooldownTime);  // Trigger the timed reset
+            }
         }
         else if (event.key === 'Escape') {
             reset();
