@@ -176,6 +176,6 @@ const ReType = (() => {
 
 // Ensure the DOM is loaded before initializing
 document.addEventListener('DOMContentLoaded', () => {
-    ReType.start();
     ReType.timedReset(true, 5000);
+    ReType.start();
 });
