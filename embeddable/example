@@ -1,0 +1,12 @@
+<body>
+    <script src="https://cdn.jsdelivr.net/gh/purploided/Re-Type@main/embeddable/re-type-module.js"></script> // embeddable
+    <script>
+    window.addEventListener('load', () => { // script example
+        ReType.start();
+        ReType.timedReset(true, 5000);
+    });
+    </script>
+    <p id="typer">Press Esc to Start...</p> --> have whatever you want in the tag, needs id
+    <p id="wpm"></p> --> need
+    <input type="text" id="userInput"> --> need
+</body>
