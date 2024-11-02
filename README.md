@@ -1,4 +1,8 @@
-# Quill
+<p align="center">
+  <img width="200px" align="center" src="https://raw.githubusercontent.com/purploided/Quill/refs/heads/main/images/quillicon.png">
+</p>
+
+<h1 align="center">🪶 Quill</h1>
 
 Welcome to **Quill**! This powerful web-based tool <sub>It's now a module too!</sub> is designed to help you measure and improve your typing speed and accuracy through engaging exercises and detailed performance tracking.
 
