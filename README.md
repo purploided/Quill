@@ -1,6 +1,6 @@
-# Re-Type
+# Quill
 
-Welcome to **Re-Type**! This powerful web-based tool <sub>It's now a module too!</sub> is designed to help you measure and improve your typing speed and accuracy through engaging exercises and detailed performance tracking.
+Welcome to **Quill**! This powerful web-based tool <sub>It's now a module too!</sub> is designed to help you measure and improve your typing speed and accuracy through engaging exercises and detailed performance tracking.
 
 ## 🚀 Features
 
@@ -9,23 +9,23 @@ Welcome to **Re-Type**! This powerful web-based tool <sub>It's now a module too!
 
 ## 🛠️ Usage
 
-1. **Open Re-Type**: Visit the website to get started.
+1. **Open Quill**: Visit the website to get started.
 2. **Start Typing**: Begin typing and let the tool automatically track your performance.
 3. **Review Your Progress**: Analyze your performance through the generated data to see how much you've improved.
 4. **Press Escape**: Press the escape key to generate a prompt to test your typing speed.
 
 ## 📁 Embed
 
-To embed and use the Re-Type Module, use the 
+To embed and use the Quill Module, use the 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/purploided/Re-Type@main/embeddable/re-type-module.js">
+<script src="https://cdn.jsdelivr.net/gh/purploided/Quille@main/embeddable/quill-module.js">
 ```
 in your html!
 
-# ReType Typing Test Documentation
+# Quill Typing Test Documentation
 
 ## Overview
-The `ReType` module is a self-invoking function that implements a typing test application. It tracks user input, calculates words per minute (WPM), and provides feedback based on the user's typing speed. It also includes cooldown functionality to reset the test after a specified time.
+The `Quill` module is a self-invoking function that implements a typing test application. It tracks user input, calculates words per minute (WPM), and provides feedback based on the user's typing speed. It also includes cooldown functionality to reset the test after a specified time.
 
 ## Key Components
 
