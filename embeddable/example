@@ -1,5 +1,5 @@
 <body>
-    <script src="https://cdn.jsdelivr.net/gh/purploided/Re-Type@main/embeddable/quill-module.js"></script> // embeddable
+    <script src="https://cdn.jsdelivr.net/gh/purploided/Quill@main/embeddable/quill-module.js"></script> // embeddable
     <script>
     window.addEventListener('load', () => { // script example
         Quill.start();
