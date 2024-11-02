@@ -1,4 +1,4 @@
-const ReType = (() => {
+const Quill = (() => {
     // Typing test variables
     let startTime; // Start time of typing test
     let typingStarted = false; // Flag to check if typing has started
@@ -61,8 +61,8 @@ const ReType = (() => {
         clearInterval(updateInterval); 
         
         updateInterval = setInterval(() => { 
-            if (ReType.getWPM) {
-                const wpm = ReType.getWPM();
+            if (Quill.getWPM) {
+                const wpm = Quill.getWPM();
                 document.getElementById('wpm').textContent = `WPM: ${wpm}`;
             }
         }, 1);  
