@@ -87,3 +87,6 @@ The `Quill` module is a self-invoking function that implements a typing test app
 
 - **`debug()`**:
   - Logs WPM and typing test status to the console for debugging purposes.
+
+- **`textRandomiser(length)`**
+  - Randomise the typing text length.
