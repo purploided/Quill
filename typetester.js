@@ -1,4 +1,4 @@
-const Quill = (() => {
+const Quill = (() => { // unga bunga quill module
     // Typing test variables
     let startTime; // Start time of typing test
     let typingStarted = false; // Flag to check if typing has started
@@ -14,27 +14,53 @@ const Quill = (() => {
     let cooldownEnabled = false;
     let cooldownTime;
 
-    const SpeedReference = [
-        "The quick brown fox jumps over the lazy dog. A small cat plays in the yard with a ball of yarn. Birds fly high in the blue sky.",
-        "It was a sunny day, and the kids went to the park. They played games and had fun. Afterward, they ate ice cream together.",
-        "The sun sets in the west, and the moon rises in the east. The stars twinkle in the night sky. The world is at peace.",
-        "The rain falls gently on the roof. The sound is soothing and calming. The plants drink up the water and grow tall and strong.",
-        "The wind blows through the trees, rustling the leaves. The branches sway back and forth. The birds sing a sweet melody.",
-        "The snow falls softly to the ground, covering everything in white. The children build snowmen and have snowball fights. It is a winter wonderland.",
-        "The waves crash against the shore, creating a symphony of sound. The seagulls cry out as they soar through the sky. The ocean is vast and beautiful.",
-        "The fire crackles and pops, warming the room. The flames dance and flicker, casting shadows on the walls. It is cozy and inviting.",
-        "The flowers bloom in the spring, filling the air with their sweet scent. The bees buzz around, collecting nectar. The world is alive with color.",
-        "The leaves change color in the fall, painting the trees in shades of red, orange, and yellow. The air is crisp and cool. It is a time of change."
+    // Text randomiser variables
+
+    let lengthRemember = 11;
+
+    let SpeedReference = [
+        //
     ];
 
+    const RandomWordsForTyping = [
+        "apple", "banana", "cherry", "date", "elderberry", "fig", "grape", "honeydew", "kiwi", "lemon", "mango", "nectarine", "orange", "papaya", "quince", "raspberry", "strawberry", "tangerine", "ugli", "vanilla", "watermelon", "ximenia", "yuzu", "zucchini",
+        "I", "you", "he", "she", "it", "we", "they", "me", "him", "her", "us", "them", "myself", "yourself", "himself", "herself", "itself", "ourselves", "yourselves", "themselves", "this", "that", "these", "those", "who", "whom", "which", "what", "whose", "whoever", "whatever", "whichever", "whomever",
+        "run", "walk", "jump", "skip", "hop", "crawl", "swim", "dive", "fly", "soar", "glide", "float", "drift", "sail", "drive", "ride", "cycle", "skate", "ski", "climb", "hike", "camp", "fish", "hunt", "shoot",
+        "happy", "sad", "angry", "mad", "glad", "joyful", "merry", "cheerful", "carefree", "careful", "cautious", "brave", "bold", "fearless", "daring", "courageous", "timid", "shy", "nervous", "anxious", "worried", "afraid", "scared", "frightened", "terrified", "panicked", "calm", "relaxed", "peaceful", "serene", "tranquil", "quiet", "still", "restful", "sleepy", "tired", "exhausted", "weary", "fatigued", "drained", "spent", "lazy", "idle", "sluggish", "lethargic", "drowsy", "sleepy", "dozy", "snoozy",
+        "the", "a", "an", "and", "but", "or", "for", "nor", "so", "yet", "after", "although", "as", "because", "before", "even", "if", "once", "since", "though", "unless", "until", "when", "where", "while", "both", "either", "neither", "not only", "whether", "as if", "as long as", "as soon as", "in order that", "so that"
+    ];
+
+    // SpeedReference randomiser
+
+    function textRandomiser(ln) {
+        // Shuffle the array using Fisher-Yates algorithm for better randomness
+        for (let i = RandomWordsForTyping.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i - 1));
+            [RandomWordsForTyping[i], RandomWordsForTyping[j]] = [RandomWordsForTyping[j], RandomWordsForTyping[i]];
+        }
+
+        // Generate a random length for the text
+        const randomLength = Math.floor(Math.random() * ln) + 10;
+        const randomText = RandomWordsForTyping.slice(0, randomLength).join(" ");
+
+        console.log(randomText);
+        SpeedReference = randomText;
+        // Remember length set by end user
+        lengthRemember = randomLength;
+        console.log(lengthRemember);
+
+        return randomText;
+    }
+
     function start() {
+        textRandomiser(lengthRemember);
         // Initialize DOM elements
         userInputElement = document.getElementById('userInput');
         typingText = document.getElementById('typer');
         wpmElement = document.getElementById('wpm');
         
         // Initialize the typing test with random text
-        typingText.textContent = SpeedReference[Math.floor(Math.random() * SpeedReference.length)];
+        typingText.textContent = SpeedReference;
         
         // Setup event listeners for the input field
         userInputElement.addEventListener('input', onTyping);
@@ -42,9 +68,10 @@ const Quill = (() => {
     }
     
     function reset() {
+        textRandomiser(lengthRemember);
         // Reset the typing test
         userInputElement.value = '';
-        typingText.textContent = SpeedReference[Math.floor(Math.random() * SpeedReference.length)];
+        typingText.textContent = SpeedReference;
         startTime = null;
         typingStarted = false;
         wpmElement.textContent = 'WPM: 0';
@@ -70,15 +97,14 @@ const Quill = (() => {
 
     function onKeyPress(event) {
         // Handle key press events for 'Enter' and 'Escape'
-
-        if (event.key === 'Enter') {
-            if (typingStarted) {  // Only trigger timedReset if typing has started
-                stop();  // Stop the current typing session
-                timedReset(cooldownEnabled, cooldownTime);  // Trigger the timed reset
-            }
+        if (event.key === 'Enter' && typingStarted) {
+            stop();
+            timedReset(cooldownEnabled, cooldownTime); 
         }
-        else if (event.key === 'Escape') {
+        else if (event.key === 'Escape' && !event.repeat) {
+            setTimeout(() => {
             reset();
+            }, 300);
         }
     }
 
@@ -172,7 +198,8 @@ const Quill = (() => {
         getWPM,
         getAdvice,
         debug,
-        timedReset
+        timedReset,
+        textRandomiser
     };
 })();
 
