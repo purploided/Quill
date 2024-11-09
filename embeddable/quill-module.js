@@ -124,7 +124,7 @@ const Quill = (() => { // unga bunga quill module
                 const wpm = Quill.getWPM();
                 document.getElementById('wpm').textContent = `WPM: ${wpm}`;
             }
-        }, 100);  
+        }, 10);  
     }
 
     function onKeyPress(event) {
