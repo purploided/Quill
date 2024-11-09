@@ -2,6 +2,7 @@ const Quill = (() => { // unga bunga quill module
     // Typing test variables
     let startTime; // Start time of typing test
     let typingStarted = false; // Flag to check if typing has started
+    let typingHasEnded = false; // Flag to check if typing has ended
     
     // Elements
     let userInputElement;
@@ -21,6 +22,18 @@ const Quill = (() => { // unga bunga quill module
     let SpeedReference = [
         //
     ];
+
+    // Highlight colors
+
+    let highlightColorG = "green";
+    let highlightColorR = "red";
+
+    // Time limit variables
+
+    let timeLimitEnabled = false;
+    let timeLimitTime;
+
+    // Random words for typing
 
     const RandomWordsForTyping = [
         "apple", "banana", "cherry", "date", "elderberry", "fig", "grape", "honeydew", "kiwi", "lemon", "mango", "nectarine", "orange", "papaya", "quince", "raspberry", "strawberry", "tangerine", "ugli", "vanilla", "watermelon", "ximenia", "yuzu", "zucchini",
@@ -72,6 +85,7 @@ const Quill = (() => { // unga bunga quill module
 
     function start() {
         textRandomiser(lengthRemember);
+        timeLimit(timeLimitEnabled, timeLimitTime);
         // Initialize DOM elements
         userInputElement = document.getElementById('userInput');
         typingText = document.getElementById('typer');
@@ -110,12 +124,16 @@ const Quill = (() => { // unga bunga quill module
                 const wpm = Quill.getWPM();
                 document.getElementById('wpm').textContent = `WPM: ${wpm}`;
             }
-        }, 1);  
+        }, 100);  
     }
 
     function onKeyPress(event) {
         // Handle key press events for 'Enter' and 'Escape'
         if (event.key === 'Enter' && typingStarted) {
+            typingHasEnded = true;
+            setTimeout(() => {
+                typingHasEnded = false;
+            }, 1);
             stop();
             timedReset(cooldownEnabled, cooldownTime); 
         }
@@ -132,20 +150,23 @@ const Quill = (() => { // unga bunga quill module
             cooldownTime;
             return;
         }
-        else {
-            cooldownEnabled = true;
-            cooldownTime = cooldown;
+        setInterval(() => {
+            if (enabled && typingHasEnded) {
+                cooldownEnabled = true;
+                cooldownTime = cooldown;
 
-            setTimeout(() => {
+                setTimeout(() => {
                 reset();
-            }, cooldown);
-        }
+                }, cooldown);
+            }
+        }, 1);
     }
 
     function stop() {
         let wpm = getWPM();
         wpmElement.textContent = `WPM: ${wpm}`;
         typingText.textContent = getAdvice(wpm);
+        userInputElement.value = '';
 
         // Pause the wpm update, instead of setting it to 0
 
@@ -159,7 +180,7 @@ const Quill = (() => { // unga bunga quill module
             const userInput = userInputElement.value;
             const timeTaken = (endTime - startTime) / 1000; // time in seconds
             const wordsPerMinute = (userInput.split(' ').length / timeTaken) * 60;
-            return wordsPerMinute.toFixed(2);
+            return wordsPerMinute.toFixed(0);
         }
         return 0;
     }
@@ -176,7 +197,7 @@ const Quill = (() => { // unga bunga quill module
         }
     }
     
-    function highlightText() {
+    function highlightText(hcG, hcR) {
         const userInput = userInputElement.value;
         const SpeedWords = typingText.textContent.split(' ');
         const userWords = userInput.split(' ');
@@ -184,10 +205,15 @@ const Quill = (() => { // unga bunga quill module
         let highlightedText = '';
         for (let i = 0; i < SpeedWords.length; i++) {
             if (userWords[i] && userWords[i].toLowerCase() === SpeedWords[i].toLowerCase()) {
-                highlightedText += `<span style="color: green">${SpeedWords[i]}</span> `;
+                highlightedText += `<span style="color: ${highlightColorG}">${SpeedWords[i]}</span> `;
             } else {
-                highlightedText += `<span style="color: red">${SpeedWords[i]}</span> `;
+                highlightedText += `<span style="color: ${highlightColorR}">${SpeedWords[i]}</span> `;
             }
+        }
+
+        if (hcG && hcR) {
+            highlightColorG = hcG;
+            highlightColorR = hcR;
         }
     
         typingText.innerHTML = highlightedText;
@@ -209,6 +235,24 @@ const Quill = (() => { // unga bunga quill module
         console.log("Advice: " + getAdvice(getWPM()));
 
     }
+
+    /*
+        what should i add here to make it more customisable
+
+        -- 09/11/2024 --
+
+        i'll add a time limit for typing, itll be togglable and customisable
+    */
+
+    function timeLimit(enabled, time) {
+        setInterval(() => {
+            if (enabled && typingStarted) {
+                setTimeout(() => {
+                    stop();
+                }, time);
+            }
+        }, 1000);
+    }
     
     return {
         start,
@@ -217,6 +261,8 @@ const Quill = (() => { // unga bunga quill module
         getAdvice,
         debug,
         timedReset,
-        textRandomiser
+        textRandomiser,
+        highlightText,
+        timeLimit
     };
 })();
