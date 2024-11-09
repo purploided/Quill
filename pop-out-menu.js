@@ -1,4 +1,5 @@
 const dots = document.querySelector('.dots');
+const wiki = document.querySelector('.wiki');
 const menu = document.createElement('div');
 const testerContainer = document.getElementById('type-tester-container');
 menu.className = 'pop-out-menu';
@@ -48,4 +49,8 @@ document.addEventListener('click', (event) => {
             menu.style.height = '200px';
         }, 300); // Match the duration of the transition
     }
+});
+
+wiki.addEventListener('click', () => {
+    window.open('https://github.com/purploided/Quill/wiki');
 });
