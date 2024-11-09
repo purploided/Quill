@@ -22,7 +22,7 @@ Welcome to **Quill**! This powerful web-based tool <sub>It's now a module too!</
 
 To embed and use the Quill Module, use the 
 ```html
-<script src="https://quill.re-find.net/embeddable/quill-module.js">
+<script src="https://api.re-find.net/embeddable/quill-module.js">
 ```
 in your html!
 
