@@ -1,0 +1,34 @@
+name: Sync to Quill API
+
+on:
+  push:
+    branches:
+      - main  # This triggers the workflow on pushes to the main branch
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main repository
+        uses: actions/checkout@v2
+        
+      - name: Set up Git
+        run: |
+          git config --local user.email "${{ secrets.GH_EMAIL }}" 
+          git config --local user.name "Nicole"  
+
+      - name: Copy quill-module.js to quill-api
+        run: |
+          # Clone the quill-api repository
+          git clone https://github.com/purploided/quill-api  # Clone the quill-api repository
+          # Change to the quill-api directory
+          cd quill-api
+          # Set up Git identity for the cloned repository
+          git config --local user.email "${{ secrets.GH_EMAIL }}" 
+          git config --local user.name "Nicole"  
+          # Copy the quill-module.js file to the quill-api repository
+          cp ../embeddable/quill-module.js ./  # Copy the file from the checked-out Quill repository
+          git add quill-module.js  # Add the copied file
+          git commit -m "Update quill-module.js from Quill project"
+          # Push to the quill-api repository using the secret for authentication
+          git push https://${{ github.actor }}:${{ secrets.GH_TOKEN }}@github.com/purploided/quill-api.git main  # Push changes
