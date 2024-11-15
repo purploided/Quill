@@ -1,10 +1,9 @@
 const dots = document.querySelector('.dots');
-const wiki = document.querySelector('.wiki');
 const menu = document.createElement('div');
 const testerContainer = document.getElementById('type-tester-container');
 menu.className = 'pop-out-menu';
 menu.style.display = 'none';
-menu.style.zIndex = '-1'; // Ensure the menu is under everything else
+menu.style.zIndex = '1'; // Ensure the menu is under everything else
 menu.innerHTML = `
     <h1 class="htu">How to use Quill</h1>
     <p class="numo">1. Press Escape to generate your typing text.</p>
@@ -13,9 +12,17 @@ menu.innerHTML = `
 `;
 document.body.appendChild(menu);
 
+const htu = document.querySelector('.htu');
+
+htu.style.cursor = 'pointer';
+
+htu.addEventListener('click', () => {
+    window.open('https://github.com/purploided/Quill/wiki');
+});
+
 // Add initial styles for the animation
 menu.style.transition = 'transform 0.5s ease, opacity 0.3s ease';
-menu.style.transform = 'translate(-300px) scale(1)';
+menu.style.transform = 'translate(100px) scale(1)';
 menu.style.opacity = '0';
 
 dots.addEventListener('click', () => {
@@ -49,8 +56,4 @@ document.addEventListener('click', (event) => {
             menu.style.height = '200px';
         }, 300); // Match the duration of the transition
     }
-});
-
-wiki.addEventListener('click', () => {
-    window.open('https://github.com/purploided/Quill/wiki');
 });

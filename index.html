@@ -119,8 +119,18 @@
     </div>
 </body>
 <script src="embeddable/quill-module.js"></script>
-<script>
-    Quill.start();
-</script>
 <script src="pop-out-menu.js"></script>
+<script>
+    Quill.start("userInput", "typer", "wpm");
+
+    // when wiki button clicked, each click will cycle through Quill.highlightPreset("samurai"); Quill.highlightPreset("patriot"); Quill.highlightPreset("monochrome"); Quill.highlightPreset("christmas");
+    const wiki = document.querySelector(".wiki");
+    const presets = ["samurai", "patriot", "monochrome", "christmas", "default"];
+    let currentPreset = 0;
+
+    wiki.addEventListener("click", function() {
+        Quill.highlightPreset(presets[currentPreset]);
+        currentPreset = (currentPreset + 1) % presets.length;
+    });
+</script>
 </html>

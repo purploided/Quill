@@ -83,13 +83,14 @@ const Quill = (() => { // unga bunga quill module
         -- 03/11/2024 --
     */
 
-    function start() {
+    function start(uie, tt, wpmE) {
         textRandomiser(lengthRemember);
         timeLimit(timeLimitEnabled, timeLimitTime);
+        
         // Initialize DOM elements
-        userInputElement = document.getElementById('userInput');
-        typingText = document.getElementById('typer');
-        wpmElement = document.getElementById('wpm');
+        userInputElement = document.getElementById(uie);
+        typingText = document.getElementById(tt);
+        wpmElement = document.getElementById(wpmE);
         
         // Initialize the typing test with random text
         typingText.textContent = SpeedReference;
@@ -253,6 +254,53 @@ const Quill = (() => { // unga bunga quill module
             }
         }, 1000);
     }
+
+    /*
+        adding presets
+
+        -- 15/11/2024 --
+    */
+
+    function preset(number) {
+        switch (number) {
+            case 1: // time limit and timed reset
+                timedReset(true, 2000); // reset finish after 2 seconds
+                timeLimit(true, 30000); // typing time limit of 30 seconds
+                break;
+            case 2: // dark red and dark blue highlight colors
+                highlightText("darkred", "darkblue");
+                break;
+            case 3: // random text length of 20 words
+                textRandomiser(20);
+                break;
+            case 4: // all presets
+                timedReset(true, 2000);
+                timeLimit(true, 30000);
+                highlightText("darkred", "darkblue");
+                textRandomiser(20);
+                break;
+        }
+    }
+
+    function highlightPreset(name) {
+        switch (name) {
+            case "default":
+                highlightText("green", "red");
+                break;
+            case "samurai":
+                highlightText("darkred", "gold");
+                break;
+            case "patriot":
+                highlightText("darkblue", "darkred");
+                break;
+            case "monochrome":
+                highlightText("darkgrey", "grey");
+                break;
+            case "christmas":
+                highlightText("lightgreen", "red");
+                break;
+        }
+    }
     
     return {
         start,
@@ -263,6 +311,8 @@ const Quill = (() => { // unga bunga quill module
         timedReset,
         textRandomiser,
         highlightText,
-        timeLimit
+        timeLimit,
+        preset,
+        highlightPreset
     };
 })();
