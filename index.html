@@ -113,6 +113,7 @@
         <h1>Quill</h1>
         <p id="typer" class="typer">Press Esc to Start..</p>
         <p id="wpm">WPM: 0</p>
+        <p id="accuracyP">Accuracy: 0%</p>
         <div class="input-area">
             <input style="font-family: 'Moon Bold';" type="text" id="userInput">
         </div>
@@ -121,16 +122,24 @@
 <script src="embeddable/quill-module.js"></script>
 <script src="pop-out-menu.js"></script>
 <script>
-    Quill.start("userInput", "typer", "wpm");
+    // Quill.start("userInput", "typer", "wpm") will start the typing test
+    Quill.start("userInput", "typer", "wpm", "accuracyP");
 
     // when wiki button clicked, each click will cycle through Quill.highlightPreset("samurai"); Quill.highlightPreset("patriot"); Quill.highlightPreset("monochrome"); Quill.highlightPreset("christmas");
     const wiki = document.querySelector(".wiki");
     const presets = ["samurai", "patriot", "monochrome", "christmas", "default"];
     let currentPreset = 0;
 
+    // Preset Show-er
     wiki.addEventListener("click", function() {
         Quill.highlightPreset(presets[currentPreset]);
         currentPreset = (currentPreset + 1) % presets.length;
     });
+
+    // wpm hider
+    Quill.wpmHider();
+
+    // accuracy
+    Quill.ace("accuracyP");
 </script>
 </html>

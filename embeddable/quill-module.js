@@ -9,32 +9,31 @@ const Quill = (() => { // unga bunga quill module
     let typingText;
     let wpmElement;
     let updateInterval;
+    let accuracyElement;
 
     // Cooldown variables
-
     let cooldownEnabled = false;
     let cooldownTime;
 
     // Text randomiser variables
-
     let lengthRemember = 11;
-
     let SpeedReference = [
         //
     ];
 
-    // Highlight colors
+    // Ace Enabled
 
+    let aceEnabled;
+
+    // Highlight colors
     let highlightColorG = "green";
     let highlightColorR = "red";
 
     // Time limit variables
-
     let timeLimitEnabled = false;
     let timeLimitTime;
 
     // Random words for typing
-
     const RandomWordsForTyping = [
         "apple", "banana", "cherry", "date", "elderberry", "fig", "grape", "honeydew", "kiwi", "lemon", "mango", "nectarine", "orange", "papaya", "quince", "raspberry", "strawberry", "tangerine", "ugli", "vanilla", "watermelon", "ximenia", "yuzu", "zucchini",
         "I", "you", "he", "she", "it", "we", "they", "me", "him", "her", "us", "them", "myself", "yourself", "himself", "herself", "itself", "ourselves", "yourselves", "themselves", "this", "that", "these", "those", "who", "whom", "which", "what", "whose", "whoever", "whatever", "whichever", "whomever",
@@ -83,7 +82,7 @@ const Quill = (() => { // unga bunga quill module
         -- 03/11/2024 --
     */
 
-    function start(uie, tt, wpmE) {
+    function start(uie, tt, wpmE, aceElement) {
         textRandomiser(lengthRemember);
         timeLimit(timeLimitEnabled, timeLimitTime);
         
@@ -91,6 +90,7 @@ const Quill = (() => { // unga bunga quill module
         userInputElement = document.getElementById(uie);
         typingText = document.getElementById(tt);
         wpmElement = document.getElementById(wpmE);
+        accuracyElement = document.getElementById(aceElement);
         
         // Initialize the typing test with random text
         typingText.textContent = SpeedReference;
@@ -98,6 +98,10 @@ const Quill = (() => { // unga bunga quill module
         // Setup event listeners for the input field
         userInputElement.addEventListener('input', onTyping);
         userInputElement.addEventListener('keydown', onKeyPress);
+
+        if (aceElement) {
+            aceEnabled = true;
+        }
     }
     
     function reset() {
@@ -165,8 +169,11 @@ const Quill = (() => { // unga bunga quill module
 
     function stop() {
         let wpm = getWPM();
+        let accuracy = getAccuracy();
+        // Display the typing speed and advice
         wpmElement.textContent = `WPM: ${wpm}`;
         typingText.textContent = getAdvice(wpm);
+        accuracyElement.textContent = `Accuracy: ${accuracy}%`;
         userInputElement.value = '';
 
         // Pause the wpm update, instead of setting it to 0
@@ -301,6 +308,71 @@ const Quill = (() => { // unga bunga quill module
                 break;
         }
     }
+
+    // WPM hider until finished typing
+
+    function wpmHider() {
+        // SetInterval
+
+        setInterval(() => {
+            if (!typingStarted) {
+                wpmElement.style.display = "block";
+            } else {
+                wpmElement.style.display = "none";
+            }
+        }, 10);
+
+        if (aceEnabled == true) {
+            setInterval(() => {
+                if (!typingStarted) {
+                    accuracyElement.style.display = "block";
+                } else {
+                    accuracyElement.style.display = "none";
+                }
+            }, 10);
+        }
+    }
+
+    /*
+        gonna add an accuracy calculator because i hate my life
+
+        -- 18/11/2024 --
+    */
+
+    function getAccuracy() {
+        const userInput = userInputElement.value;
+        const SpeedWords = typingText.textContent.split(' ');
+        const userWords = userInput.split(' ');
+
+        // Calculate accuracy
+
+        let correctWords = 0;
+        let incorrectWords = 0;
+
+        if (typingStarted) {
+            for (let i = 0; i < SpeedWords.length; i++) {
+                if (userWords[i] && userWords[i].toLowerCase() === SpeedWords[i].toLowerCase()) {
+                    correctWords++;
+                } else {
+                    incorrectWords++;
+                }
+            }
+         
+            let accuracy = (correctWords / (correctWords + incorrectWords)) * 900;
+            accuracy = Math.min(accuracy, 100);
+
+            return accuracy.toFixed(0);
+        }
+    }
+
+    function ace(defineAccuracyElement) {
+        accuracyElement = document.getElementById(defineAccuracyElement);
+        setInterval(() => {
+            if (typingStarted) {
+                accuracyElement.textContent = `Accuracy: ${getAccuracy()}%`;
+            }
+        }, 10);
+    }
     
     return {
         start,
@@ -313,6 +385,9 @@ const Quill = (() => { // unga bunga quill module
         highlightText,
         timeLimit,
         preset,
-        highlightPreset
+        highlightPreset,
+        wpmHider,
+        getAccuracy,
+        ace
     };
 })();
