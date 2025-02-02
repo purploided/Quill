@@ -32,6 +32,10 @@ const Quill = (() => { // unga bunga quill module
     let timeLimitEnabled = false;
     let timeLimitTime;
 
+    // Spelling bee variable
+
+    let spellingBeeEnabled = false;
+
     // Random words for typing
     const RandomWordsForTyping = [
         "apple", "banana", "cherry", "date", "elderberry", "fig", "grape", "honeydew", "kiwi", "lemon", "mango", "nectarine", "orange", "papaya", "quince", "raspberry", "strawberry", "tangerine", "ugli", "vanilla", "watermelon", "ximenia", "yuzu", "zucchini",
@@ -82,37 +86,73 @@ const Quill = (() => { // unga bunga quill module
     */
 
     function start(uie, tt, wpmE, aceElement) {
-        textRandomiser(lengthRemember);
-        timeLimit(timeLimitEnabled, timeLimitTime);
-        
-        // Initialize DOM elements
-        userInputElement = document.getElementById(uie);
-        typingText = document.getElementById(tt);
-        wpmElement = document.getElementById(wpmE);
-        accuracyElement = document.getElementById(aceElement);
-        
-        // Initialize the typing test with random text
-        typingText.textContent = SpeedReference;
-        
-        // Setup event listeners for the input field
-        userInputElement.addEventListener('input', onTyping);
-        userInputElement.addEventListener('keydown', onKeyPress);
-
-        // if ace is defined, enable it
-        if (aceElement) {
-            aceEnabled = true;
+        if (spellingBeeEnabled == true) {
+            spellingBee(true);
+            timeLimit(timeLimitEnabled, timeLimitTime);
+            
+            // Initialize DOM elements
+            userInputElement = document.getElementById(uie);
+            typingText = document.getElementById(tt);
+            wpmElement = document.getElementById(wpmE);
+            accuracyElement = document.getElementById(aceElement);
+            
+            // Initialize the typing test with random text
+            typingText.textContent = SpeedReference;
+            
+            // Setup event listeners for the input field
+            userInputElement.addEventListener('input', onTyping);
+            userInputElement.addEventListener('keydown', onKeyPress);
+    
+            // if ace is defined, enable it
+            if (aceElement) {
+                aceEnabled = true;
+            }
+        }
+        else {
+            textRandomiser(lengthRemember);
+            timeLimit(timeLimitEnabled, timeLimitTime);
+            
+            // Initialize DOM elements
+            userInputElement = document.getElementById(uie);
+            typingText = document.getElementById(tt);
+            wpmElement = document.getElementById(wpmE);
+            accuracyElement = document.getElementById(aceElement);
+            
+            // Initialize the typing test with random text
+            typingText.textContent = SpeedReference;
+            
+            // Setup event listeners for the input field
+            userInputElement.addEventListener('input', onTyping);
+            userInputElement.addEventListener('keydown', onKeyPress);
+    
+            // if ace is defined, enable it
+            if (aceElement) {
+                aceEnabled = true;
+            }
         }
     }
     
     function reset() {
-        textRandomiser(lengthRemember);
-        // Reset the typing test
-        userInputElement.value = '';
-        typingText.textContent = SpeedReference;
-        startTime = null;
-        typingStarted = false;
-        wpmElement.textContent = 'WPM: 0';
-        accuracyElement.textContent = 'Accuracy: 0%';
+        if (spellingBeeEnabled == true) {
+            spellingBee(true);
+            // Reset the typing test
+            userInputElement.value = '';
+            typingText.textContent = SpeedReference;
+            startTime = null;
+            typingStarted = false;
+            wpmElement.textContent = 'WPM: 0';
+            accuracyElement.textContent = 'Accuracy: 0%';
+        }
+        else {
+            textRandomiser(lengthRemember);
+            // Reset the typing test
+            userInputElement.value = '';
+            typingText.textContent = SpeedReference;
+            startTime = null;
+            typingStarted = false;
+            wpmElement.textContent = 'WPM: 0';
+            accuracyElement.textContent = 'Accuracy: 0%';
+        }
     }
     
     function onTyping() {
@@ -482,6 +522,27 @@ const Quill = (() => { // unga bunga quill module
                                     :-=-::-:::-::::::::::::::::::::::...::::...:..:..:..:::..:...................=*::....:--+==::................:+****#####%##%##%%%%%%%%%%%%%%%%%%%%%%#
     */
 
+    // making a spelling bee function, seeing how quick you type a word
+
+    function spellingBee(enabled) {
+        if (enabled == true) {
+            spellingBeeEnabled = true;
+
+            // Select a random word from the array
+            const randomIndex = Math.floor(Math.random() * RandomWordsForTyping.length);
+            const randomWord = RandomWordsForTyping[randomIndex];
+
+            console.log(randomWord);
+            SpeedReference = randomWord;
+
+            return randomWord;
+        }
+        else {
+            spellingBeeEnabled = false;
+            return;
+        }
+    }
+
     // Export the functions
     return {
         start,
@@ -498,6 +559,7 @@ const Quill = (() => { // unga bunga quill module
         wpmHider,
         getAccuracy,
         ace,
-        leaderstats
+        leaderstats,
+        spellingBee
     };
 })();
