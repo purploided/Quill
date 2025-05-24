@@ -1,0 +1,82 @@
+@font-face {
+    font-family: 'Moon Bold';
+    src: url('fonts/Moon Bold.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+}
+body {
+    font-family: 'Moon Bold';
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+}
+.container {
+    text-align: center;
+    background: #fff;
+    width: 500px;
+    padding: 0px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.input-area {
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+.input-area input {
+    width: 80%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.dots {
+    width: 30px;
+    height: 30px;
+    position: relative;
+    left: 48%;
+    top: 10%;
+}
+.dots:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+}
+.wiki {
+    width: 25px;
+    height: 25px;
+    position: relative;
+    left: -50%;
+    top: 15%;
+}
+.wiki:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+}
+.pop-out-menu {
+    text-align: center;
+    background: #fff;
+    width: 300px;
+    height: 255px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    left: 10px;
+
+    transition: linear 3s;
+}
+.htu {
+    font-size: 20px;
+}
+.numo {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: left;
+    margin-left: 10px;
+}
+.typer {
+    padding-left: 10px;
+    padding-right: 10px;
+}
