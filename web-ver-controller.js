@@ -12,7 +12,7 @@ menu.innerHTML = `
 `;
 document.body.appendChild(menu);
 
-const htu = document.querySelector('.htu');
+const htu = document.querySelector('.wiki');
 
 htu.style.cursor = 'pointer';
 
@@ -20,10 +20,11 @@ htu.addEventListener('click', () => {
     window.open('https://github.com/purploided/Quill/wiki');
 });
 
-// Add initial styles for the animation
 menu.style.transition = 'transform 0.5s ease, opacity 0.3s ease';
-menu.style.transform = 'translate(100px) scale(1)';
+menu.style.transform = 'scale(1)';
 menu.style.opacity = '0';
+
+menu.style.backgroundImage = 'linear-gradient(280deg, rgb(48, 48, 48), rgb(31, 31, 31))';
 
 dots.addEventListener('click', () => {
     if (menu.style.display === 'none') {
@@ -31,9 +32,9 @@ dots.addEventListener('click', () => {
         setTimeout(() => {
             menu.style.transform = 'scale(1)';
             menu.style.opacity = '1';
-        }, 50); // Small delay to ensure the transition occurs
+        }, 50);
         menu.style.width = '300px';
-        menu.style.height = '255px';
+        menu.style.height = '245px';
     } else {
         menu.style.transform = 'scale(0)';
         menu.style.opacity = '0';
@@ -41,11 +42,10 @@ dots.addEventListener('click', () => {
             menu.style.display = 'none';
             menu.style.width = '200px';
             menu.style.height = '200px';
-        }, 300); // Match the duration of the transition
+        }, 300)
     }
 });
 
-// Optional: Close the menu when clicking outside of it
 document.addEventListener('click', (event) => {
     if (!dots.contains(event.target) && !menu.contains(event.target)) {
         menu.style.transform = 'scale(0)';
@@ -54,6 +54,6 @@ document.addEventListener('click', (event) => {
             menu.style.display = 'none';
             menu.style.width = '200px';
             menu.style.height = '200px';
-        }, 300); // Match the duration of the transition
+        }, 300);
     }
 });

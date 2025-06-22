@@ -25,8 +25,8 @@ const Quill = (() => { // unga bunga quill module
     let aceEnabled;
 
     // Highlight colors
-    let highlightColorG = "green";
-    let highlightColorR = "red";
+    let highlightColorG = "#00a400"; // Green for correct words
+    let highlightColorR = "#980000"; // Red for incorrect words
 
     // Time limit variables
     let timeLimitEnabled = false;
@@ -47,14 +47,13 @@ const Quill = (() => { // unga bunga quill module
     // SpeedReference randomiser
 
     function textRandomiser(ln) {
-        // Shuffle the array using Fisher-Yates algorithm for better randomness
         for (let i = RandomWordsForTyping.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i - 1));
             [RandomWordsForTyping[i], RandomWordsForTyping[j]] = [RandomWordsForTyping[j], RandomWordsForTyping[i]];
         }
-
+        
         // Generate a random length for the text
-        const randomLength = Math.floor(Math.random() * ln) + 10;
+        const randomLength = Math.floor(Math.random() * ln) + 5;
         const randomText = RandomWordsForTyping.slice(0, randomLength).join(" ");
 
         console.log(randomText);
@@ -84,73 +83,71 @@ const Quill = (() => { // unga bunga quill module
         -- 03/11/2024 --
     */
 
-    function start(uie, tt, wpmE, aceElement) {
-        if (spellingBeeEnabled == true) {
+    function start(uie, tt, wpmE, aceElement) { // made this a switch statement -- 22/06/2025 --
+        textRandomiser(lengthRemember);
+
+        switch (spellingBeeEnabled) {
+            case true:
             spellingBee(true);
             timeLimit(timeLimitEnabled, timeLimitTime);
-            
+
             // Initialize DOM elements
             userInputElement = document.getElementById(uie);
             typingText = document.getElementById(tt);
             wpmElement = document.getElementById(wpmE);
             accuracyElement = document.getElementById(aceElement);
-            
+
             // Initialize the typing test with random text
             typingText.textContent = SpeedReference;
-            
+
             // Setup event listeners for the input field
             userInputElement.addEventListener('input', onTyping);
             userInputElement.addEventListener('keydown', onKeyPress);
-    
-            // if ace is defined, enable it
-            if (aceElement) {
-                aceEnabled = true;
-            }
-        }
-        else {
-            textRandomiser(lengthRemember);
+
+            console.log("%cPowered by Quill", "color:rgb(255, 255, 255); font-weight: bold; font-size:20px; font-family:Comic Sans MS; text-shadow: 2px 2px 0 #222, 4px 4px 0 #888;");
+            break;
+            default:
             timeLimit(timeLimitEnabled, timeLimitTime);
-            
-            // Initialize DOM elements
+
             userInputElement = document.getElementById(uie);
             typingText = document.getElementById(tt);
             wpmElement = document.getElementById(wpmE);
             accuracyElement = document.getElementById(aceElement);
-            
-            // Initialize the typing test with random text
+
             typingText.textContent = SpeedReference;
-            
-            // Setup event listeners for the input field
+
             userInputElement.addEventListener('input', onTyping);
             userInputElement.addEventListener('keydown', onKeyPress);
-    
-            // if ace is defined, enable it
-            if (aceElement) {
-                aceEnabled = true;
-            }
+
+            console.log("%cPowered by Quill", "color:rgb(255, 255, 255); font-weight: bold; font-size:20px; font-family:Comic Sans MS; text-shadow: 2px 2px 0 #222, 4px 4px 0 #888;");
+            break;
+        }
+
+        if (aceElement) {
+            aceEnabled = true;
         }
     }
     
     function reset() {
-        if (spellingBeeEnabled == true) {
-            spellingBee(true);
-            // Reset the typing test
-            userInputElement.value = '';
-            typingText.textContent = SpeedReference;
-            startTime = null;
-            typingStarted = false;
-            wpmElement.textContent = 'WPM: 0';
-            accuracyElement.textContent = 'Accuracy: 0%';
-        }
-        else {
-            textRandomiser(lengthRemember);
-            // Reset the typing test
-            userInputElement.value = '';
-            typingText.textContent = SpeedReference;
-            startTime = null;
-            typingStarted = false;
-            wpmElement.textContent = 'WPM: 0';
-            accuracyElement.textContent = 'Accuracy: 0%';
+        switch (spellingBeeEnabled) {
+            case true:
+                spellingBee(true);
+                userInputElement.value = '';
+                typingText.textContent = SpeedReference;
+                startTime = null;
+                typingStarted = false;
+                wpmElement.textContent = 'WPM: 0';
+                accuracyElement.textContent = 'Accuracy: 0%';
+                break;
+            default:
+                textRandomiser(lengthRemember);
+                userInputElement.value = '';
+                typingText.textContent = SpeedReference;
+                startTime = null;
+                typingStarted = false;
+                wpmElement.textContent = 'WPM: 0';
+                accuracyElement.textContent = 'Accuracy: 0%';
+                break;
         }
     }
     
@@ -209,12 +206,12 @@ const Quill = (() => { // unga bunga quill module
 
     function stop() {
         let wpm = getWPM();
-        let accuracy = getAccuracy();
+        let accuracyInt = accuracy();
         let leaderboard = leaderstats();
         // Display the typing speed and advice
         wpmElement.textContent = `WPM: ${wpm}`;
         typingText.textContent = getAdvice(wpm);
-        accuracyElement.textContent = `Accuracy: ${accuracy}%`;
+        accuracyElement.textContent = `Accuracy: ${accuracyInt}%`;
         userInputElement.value = '';
 
         // Pause the wpm update, instead of setting it to 0
@@ -238,7 +235,7 @@ const Quill = (() => { // unga bunga quill module
         if (wpm <= 50) {
             return "Advice: Practice daily with touch typing exercises, focusing on accuracy over speed to build muscle memory and gradually increase your WPM.";
         } else if (wpm > 50 && wpm <= 70) {
-            return "Advice: Refine your typing rhythm with intermediate drills, focusing on consistent speed and tackling tricky key combinations to boost your accuracy and flow.";
+            return "Advice: Refine your typing rhythm with intermediate drills, focusing on consistent speed and tackling tricky key combinations to boost your accuracy.";
         } else if (wpm > 70 && wpm <= 90) {
             return "Advice: Challenge yourself with advanced typing tests, focusing on speed and accuracy to push your limits and reach your full potential.";
         } else {
@@ -303,53 +300,6 @@ const Quill = (() => { // unga bunga quill module
         }, 1000);
     }
 
-    /*
-        adding presets
-
-        -- 15/11/2024 --
-    */
-
-    function preset(number) {
-        switch (number) {
-            case 1: // time limit and timed reset
-                timedReset(true, 2000); // reset finish after 2 seconds
-                timeLimit(true, 30000); // typing time limit of 30 seconds
-                break;
-            case 2: // dark red and dark blue highlight colors
-                highlightText("darkred", "darkblue");
-                break;
-            case 3: // random text length of 20 words
-                textRandomiser(20);
-                break;
-            case 4: // all presets
-                timedReset(true, 2000);
-                timeLimit(true, 30000);
-                highlightText("darkred", "darkblue");
-                textRandomiser(20);
-                break;
-        }
-    }
-
-    function highlightPreset(name) {
-        switch (name) {
-            case "default":
-                highlightText("green", "red");
-                break;
-            case "samurai":
-                highlightText("darkred", "gold");
-                break;
-            case "patriot":
-                highlightText("darkblue", "darkred");
-                break;
-            case "monochrome":
-                highlightText("darkgrey", "grey");
-                break;
-            case "christmas":
-                highlightText("lightgreen", "red");
-                break;
-        }
-    }
-
     // WPM hider until finished typing
 
     function wpmHider() {
@@ -378,9 +328,15 @@ const Quill = (() => { // unga bunga quill module
         gonna add an accuracy calculator because i hate my life
 
         -- 18/11/2024 --
+
+---------------------------------------------------------------------------
+
+        overhauling this... because i hate my life
+
+        -- 22/06/2025 --
     */
 
-    function getAccuracy() {
+    function accuracy() {
         const userInput = userInputElement.value;
         const SpeedWords = typingText.textContent.split(' ');
         const userWords = userInput.split(' ');
@@ -411,7 +367,7 @@ const Quill = (() => { // unga bunga quill module
         accuracyElement = document.getElementById(defineAccuracyElement);
         setInterval(() => {
             if (typingStarted) {
-                accuracyElement.textContent = `Accuracy: ${getAccuracy()}%`;
+                accuracyElement.textContent = `Accuracy: ${accuracy()}%`;
             }
         }, 10);
         return;
@@ -420,7 +376,7 @@ const Quill = (() => { // unga bunga quill module
     // Local Best WPM and Accuracy
     function leaderstats() {
         let currentWpm = getWPM();
-        let currentAcc = getAccuracy();
+        let currentAcc = accuracy();
 
         let leaderstatsLocalStorage = localStorage.getItem("leaderstats");
         let leaderstatsParsed = leaderstatsLocalStorage ? JSON.parse(leaderstatsLocalStorage) : { wpm: 0, acc: 0 };
@@ -614,10 +570,8 @@ const Quill = (() => { // unga bunga quill module
         textRandomiser,
         highlightText,
         timeLimit,
-        preset,
-        highlightPreset,
         wpmHider,
-        getAccuracy,
+        accuracy,
         ace,
         leaderstats,
         spellingBee
