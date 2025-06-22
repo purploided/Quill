@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="200px" align="center" src="https://raw.githubusercontent.com/purploided/Quill/refs/heads/main/images/quillicon.png">
+  <img width="200px" align="center" src="https://raw.githubusercontent.com/purploided/Quill/refs/heads/main/images/quilliconnew.png">
 </p>
 
 <h1 align="center">🪶 Quill</h1>
