@@ -1,34 +1,51 @@
 <p align="center">
-  <img width="200px" align="center" src="https://raw.githubusercontent.com/purploided/Quill/refs/heads/main/images/quilliconnew.png">
+  <img width="200px" src="https://raw.githubusercontent.com/purploided/Quill/refs/heads/main/images/quilliconnew.png">
 </p>
 
 <h1 align="center">🪶 Quill</h1>
 
-Welcome to **Quill**! This powerful web-based tool <sub>It's now a module too!</sub> is designed to help you measure and improve your typing speed and accuracy through engaging exercises and detailed performance tracking.
+<p align="center"><strong>Welcome to Quill!</strong>  
+This powerful web-based tool<sub> — now available as a module too!</sub> helps you measure and improve your typing speed and accuracy through engaging exercises and detailed performance tracking.</p>
+
+---
 
 ## 🚀 Features
 
-- **Typing Exercises**: Engage in a variety of exercises tailored to enhance your typing skills.
-- **Performance Tracking**: Monitor your typing speed and accuracy in real-time.
+- **Typing Exercises** – Enhance your typing skills through varied and engaging challenges.  
+- **Performance Tracking** – Monitor your speed and accuracy in real time.
+
+---
 
 ## 🛠️ Usage
 
-1. **Open Quill**: Visit the website to get started.
-2. **Start Typing**: Begin typing and let the tool automatically track your performance.
-3. **Review Your Progress**: Analyze your performance through the generated data to see how much you've improved.
-4. **Press Escape**: Press the escape key to generate a prompt to test your typing speed.
+1. **Open Quill** – Visit the website to get started.
+2. **Start Typing** – Begin typing; the tool will automatically track your stats.
+3. **Review Your Progress** – Analyze your performance data to track improvement.
+4. **Press Escape** – Press `Esc` to trigger a typing prompt.
+
+---
 
 ## 📁 Embed
 
-To embed and use the Quill Module, use the 
+To embed and use the Quill module, include the following in your HTML:
+
 ```html
-<script src="https://api.purploid.xyz/quill-module.js">
+<script src="https://api.purploid.xyz/quill-module.js"></script>
 ```
-in your html!
 
-# Quill Typing Test Documentation
+---
 
-## Overview
-The `Quill` module is a self-invoking function that implements a typing test application. It tracks user input, calculates words per minute (WPM), and provides feedback based on the user's typing speed. It also includes cooldown functionality to reset the test after a specified time.
+## 📘 Quill Typing Test Documentation
 
-# Go to [The Wiki](https://github.com/purploided/Quill/wiki)
+### Overview
+
+The `Quill` module is a self-invoking function that implements a typing test application. It:
+
+- Tracks user input
+- Calculates words per minute (WPM)
+- Provides real-time feedback
+- Resets the test after a cooldown period
+
+---
+
+## 📚 [View the Wiki](https://github.com/purploided/Quill/wiki)
