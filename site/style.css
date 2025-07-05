@@ -1,18 +1,18 @@
 @font-face {
     font-family: 'Typographia';
-    src: url('fonts/Typographica-Blp5.ttf') format('opentype');
+    src: url('/assets/fonts/Typographica-Blp5.ttf') format('opentype');
     font-weight: bold;
     font-style: normal;
 }
 @font-face {
     font-family: 'Monainn';
-    src: url('fonts/MonainnRegular-RpWKo.otf') format('opentype');
+    src: url('/assets/fonts/MonainnRegular-RpWKo.otf') format('opentype');
     font-weight: bold;
     font-style: normal;
 }
 @font-face {
     font-family: 'Dropline';
-    src: url('fonts/DroplineRegular-Wpegz.otf') format('opentype');
+    src: url('/assets/fonts/DroplineRegular-Wpegz.otf') format('opentype');
     font-weight: 1200;
     font-style: normal;
 }
