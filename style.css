@@ -1,11 +1,25 @@
 @font-face {
-    font-family: 'Moon Bold';
-    src: url('fonts/Moon Bold.otf') format('opentype');
+    font-family: 'Typographia';
+    src: url('fonts/Typographica-Blp5.ttf') format('opentype');
     font-weight: bold;
     font-style: normal;
 }
+@font-face {
+    font-family: 'Monainn';
+    src: url('fonts/MonainnRegular-RpWKo.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Dropline';
+    src: url('fonts/DroplineRegular-Wpegz.otf') format('opentype');
+    font-weight: 1200;
+    font-style: normal;
+}
 body {
-    font-family: 'Moon Bold';
+    font-family: 'Dropline';
+    font-weight: 1200;
+    font-size: 16.5px;
     margin: 0;
     padding: 0;
     display: flex;
@@ -31,12 +45,15 @@ body {
 
     position: fixed;
 
+    margin-top: -30px;
+
     transition: all 0.3s ease-in-out;
 
     z-index: 2;
 }
 .header {
     text-align: center;
+    font-family: 'Monainn';
     background: rgba(226, 226, 226, 0.712);
     width: 500px;
     height: 75px;
@@ -60,14 +77,14 @@ body {
 .header:hover {
     transform: scale(1.05);
 }
-.container:hover {
-    transform: scale(1.05);
-}
 .input-area {
+    font-family: 'Monainn';
     margin-top: 10px;
     margin-bottom: 30px;
 }
 .input-area input {
+    font-family: 'Monainn';
+
     width: 80%;
     padding: 10px;
     font-size: 16px;
@@ -108,11 +125,14 @@ body {
     text-align: center;
     background: #fff;
     width: 300px;
-    height: 255px;
+    height: 300px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     position: relative;
-    left: 420px;
+    margin-left: 850px;
+    margin-top: -109px;
+
+    position: fixed;
 
     transition: linear 3s;
 }

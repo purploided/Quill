@@ -34,7 +34,7 @@ dots.addEventListener('click', () => {
             menu.style.opacity = '1';
         }, 50);
         menu.style.width = '300px';
-        menu.style.height = '245px';
+        menu.style.height = '300px';
     } else {
         menu.style.transform = 'scale(0)';
         menu.style.opacity = '0';

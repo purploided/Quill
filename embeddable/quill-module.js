@@ -1,4 +1,5 @@
 const Quill = (() => { // unga bunga quill module
+    console.log("%cPowered by Quill", "color:rgb(255, 255, 255); font-weight: bold; font-size:20px; font-family:Comic Sans MS; text-shadow: 2px 2px 0 #222, 4px 4px 0 #888;");
     // Typing test variables
     let startTime; // Start time of typing test
     let typingStarted = false; // Flag to check if typing has started
@@ -17,6 +18,7 @@ const Quill = (() => { // unga bunga quill module
 
     // Text randomiser variables
     let lengthRemember = 11;
+    let lengthModifier = 3; // Default length modifier for random text generation
     let SpeedReference = [
         //
     ];
@@ -25,8 +27,8 @@ const Quill = (() => { // unga bunga quill module
     let aceEnabled;
 
     // Highlight colors
-    let highlightColorG = "#00a400"; // Green for correct words
-    let highlightColorR = "#980000"; // Red for incorrect words
+    let highlightColorG; // Green for correct words
+    let highlightColorR; // Red for incorrect words
 
     // Time limit variables
     let timeLimitEnabled = false;
@@ -46,21 +48,39 @@ const Quill = (() => { // unga bunga quill module
 
     // SpeedReference randomiser
 
-    function textRandomiser(ln) {
+    function textRandomiser(ln, lnmodifier) {
         for (let i = RandomWordsForTyping.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i - 1));
             [RandomWordsForTyping[i], RandomWordsForTyping[j]] = [RandomWordsForTyping[j], RandomWordsForTyping[i]];
         }
         
         // Generate a random length for the text
-        const randomLength = Math.floor(Math.random() * ln) + 5;
+        const randomLength = Math.floor(Math.random() * ln) + lnmodifier; // Random length between 0 and ln + lengthModifier
         const randomText = RandomWordsForTyping.slice(0, randomLength).join(" ");
 
-        console.log(randomText);
         SpeedReference = randomText;
-        // Remember length set by end user
+        console.log(
+            `%c[Quill]:%c Randomly Generated Text:   %c"%c${SpeedReference}%c"`,
+            "color: #00bfff; font-weight: bold; font-family: Comic Sans MS;",
+            "font-family: Comic Sans MS;",
+            "color: #00bfff; font-weight: bold; font-family: Comic Sans MS;",
+            "color: #fff; background: #222; font-family: monospace; padding: 2px 6px; border-radius: 4px;",
+            "color: #00bfff; font-weight: bold; font-family: Comic Sans MS;"
+        );
         lengthRemember = randomLength;
-        console.log(lengthRemember);
+        console.log(
+            "%c[Quill]:%c Average Generation Length: %c" + lengthRemember,
+            "color: #00bfff; font-weight: bold; font-family: Comic Sans MS;",
+            "font-family: Comic Sans MS;",
+            "color: #fff; background: #222; font-family: Comic Sans MS; padding: 2px 6px; border-radius: 4px;"
+        );
+        lengthModifier = lnmodifier;
+        console.log(
+            "%c[Quill]:%c Length Modifier: %c" + lengthModifier,
+            "color: #00bfff; font-weight: bold; font-family: Comic Sans MS;",
+            "font-family: Comic Sans MS;",
+            "color: #fff; background: #222; font-family: Comic Sans MS; padding: 2px 6px; border-radius: 4px;"
+        );
 
         return randomText;
     }
@@ -84,8 +104,6 @@ const Quill = (() => { // unga bunga quill module
     */
 
     function start(uie, tt, wpmE, aceElement) { // made this a switch statement -- 22/06/2025 --
-        textRandomiser(lengthRemember);
-
         switch (spellingBeeEnabled) {
             case true:
             spellingBee(true);
@@ -103,8 +121,6 @@ const Quill = (() => { // unga bunga quill module
             // Setup event listeners for the input field
             userInputElement.addEventListener('input', onTyping);
             userInputElement.addEventListener('keydown', onKeyPress);
-
-            console.log("%cPowered by Quill", "color:rgb(255, 255, 255); font-weight: bold; font-size:20px; font-family:Comic Sans MS; text-shadow: 2px 2px 0 #222, 4px 4px 0 #888;");
             break;
             default:
             timeLimit(timeLimitEnabled, timeLimitTime);
@@ -118,8 +134,6 @@ const Quill = (() => { // unga bunga quill module
 
             userInputElement.addEventListener('input', onTyping);
             userInputElement.addEventListener('keydown', onKeyPress);
-
-            console.log("%cPowered by Quill", "color:rgb(255, 255, 255); font-weight: bold; font-size:20px; font-family:Comic Sans MS; text-shadow: 2px 2px 0 #222, 4px 4px 0 #888;");
             break;
         }
 
@@ -129,6 +143,10 @@ const Quill = (() => { // unga bunga quill module
     }
     
     function reset() {
+        console.clear();
+        console.warn("%c[Quill]:%c Resetting typing test...", "color: #00bfff; font-weight: bold; font-family: Comic Sans MS;", "font-family: Comic Sans MS;");
+        console.clear();
+        console.log("%cPowered by Quill", "color:rgb(255, 255, 255); font-weight: bold; font-size:20px; font-family:Comic Sans MS; text-shadow: 2px 2px 0 #222, 4px 4px 0 #888;");
         switch (spellingBeeEnabled) {
             case true:
                 spellingBee(true);
@@ -140,7 +158,7 @@ const Quill = (() => { // unga bunga quill module
                 accuracyElement.textContent = 'Accuracy: 0%';
                 break;
             default:
-                textRandomiser(lengthRemember);
+                textRandomiser(lengthRemember, lengthModifier);
                 userInputElement.value = '';
                 typingText.textContent = SpeedReference;
                 startTime = null;
@@ -192,7 +210,8 @@ const Quill = (() => { // unga bunga quill module
             cooldownTime;
             return;
         }
-        setInterval(() => {
+        else {
+            setInterval(() => {
             if (enabled && typingHasEnded) {
                 cooldownEnabled = true;
                 cooldownTime = cooldown;
@@ -202,12 +221,13 @@ const Quill = (() => { // unga bunga quill module
                 }, cooldown);
             }
         }, 1);
+        }
     }
 
     function stop() {
         let wpm = getWPM();
         let accuracyInt = accuracy();
-        let leaderboard = leaderstats();
+        leaderstats();
         // Display the typing speed and advice
         wpmElement.textContent = `WPM: ${wpm}`;
         typingText.textContent = getAdvice(wpm);
@@ -263,6 +283,7 @@ const Quill = (() => { // unga bunga quill module
         }
     
         typingText.innerHTML = highlightedText;
+        return highlightedText;
     }
 
     function debug(){
@@ -300,28 +321,26 @@ const Quill = (() => { // unga bunga quill module
         }, 1000);
     }
 
-    // WPM hider until finished typing
+    // WPM and accuracy always visible
 
     function wpmHider() {
-        // SetInterval
-
+        // Instead of hiding, just update their text content
         setInterval(() => {
-            if (!typingStarted) {
-                wpmElement.style.display = "block";
-            } else {
-                wpmElement.style.display = "none";
+            if (typingStarted) {
+                // Optionally update live values here if needed
             }
         }, 10);
 
         if (aceEnabled == true) {
             setInterval(() => {
-                if (!typingStarted) {
-                    accuracyElement.style.display = "block";
-                } else {
-                    accuracyElement.style.display = "none";
+                if (typingStarted) {
+                    // Optionally update accuracy live here if needed
                 }
             }, 10);
         }
+        // Ensure elements are always visible
+        if (wpmElement) wpmElement.style.display = "block";
+        if (accuracyElement) accuracyElement.style.display = "block";
     }
 
     /*
@@ -394,8 +413,18 @@ const Quill = (() => { // unga bunga quill module
 
         localStorage.setItem("leaderstats", JSON.stringify(leaderstatsParsed));
 
-        console.log("Best WPM: " + leaderstatsParsed.wpm);
-        console.log("Best Accuracy: " + leaderstatsParsed.acc);
+        console.log(
+            "%c[Quill]:%c Best WPM: %c" + leaderstatsParsed.wpm,
+            "color: #00bfff; font-weight: bold; font-family: Comic Sans MS;",
+            "font-family: Comic Sans MS;",
+            "color: #fff; background: #222; font-family: Comic Sans MS; padding: 2px 6px; border-radius: 4px;"
+        );
+        console.log(
+            "%c[Quill]:%c Best Accuracy: %c" + leaderstatsParsed.acc + "%",
+            "color: #00bfff; font-weight: bold; font-family: Comic Sans MS;",
+            "font-family: Comic Sans MS;",
+            "color: #fff; background: #222; font-family: Comic Sans MS; padding: 2px 6px; border-radius: 4px;"
+        );
 
         return leaderstatsParsed;
     }
