@@ -1,4 +1,4 @@
-name: Deploy static site to GitHub Pages
+name: Deploy Quill-Web-Version to the Interwebs 👻
 
 on:
   push:
