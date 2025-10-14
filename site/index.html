@@ -6,7 +6,9 @@
   <title>Quill</title>
   <link rel="icon" href="https://raw.githubusercontent.com/purploided/Quill/refs/heads/main/assets/images/quilliconnew.png" type="image/png">
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>
+  <style type="text/tailwindcss">
+    @import "tailwindcss";
+
     @font-face {
       font-family: 'Typographia';
       src: url('/assets/fonts/Typographica-Blp5.ttf') format('opentype');
@@ -32,25 +34,17 @@
   </style>
 </head>
 
-<body class="flex justify-center items-center h-screen bg-stone-950 text-gray-200">
-
-    <div class="sticky translate-x-1/2 -translate-y-40
-                w-[500px] h-[75px] bg-gradient-to-br from-stone-800 to-stone-950 
-                rounded-lg shadow-xl border border-stone-800 
-                flex items-center justify-center z-10 
+<body class="justify-center items-center h-screen bg-stone-950 text-gray-200 p-8">
+    <div class="relative top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
+                flex flex-col items-center
+                max-w-[500px] bg-gradient-to-br from-stone-800 to-stone-950 
+                rounded-lg shadow-lg border border-stone-800 
+                backdrop-blur-sm text-center z-20 p-6
                 hover:scale-105 transition-transform duration-300">
     
     <img src="https://raw.githubusercontent.com/purploided/Quill/refs/heads/main/assets/images/quilliconnew.png" 
-        alt="Quill Icon" 
-        class="w-12 h-12 mr-4 hover:scale-125 transition-transform duration-150">
-    </div>
-
-
-    <div class="sticky top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
-                w-[500px] bg-gradient-to-br from-stone-800 to-stone-950 
-                rounded-lg shadow-lg border border-stone-800 
-                backdrop-blur-sm text-center z-20 p-6 
-                hover:scale-105 transition-transform duration-300">
+    alt="Quill Icon" 
+    class="w-12 h-12 hover:scale-125 transition-transform duration-150-translate-y-4 inline-block">
     
     <p id="typer" class="mb-4 text-lg font-monainn">Press Esc to Start..</p>
     <p id="wpm" class="mb-2">WPM: 0</p>
@@ -61,7 +55,6 @@
                     bg-stone-800 text-white font-['Typographia'] 
                     focus:outline-none focus:ring-2 focus:ring-green-400">
     </div>
-
 
     <script src="/embeddable/quill-module.js"></script>
     <script src="web-ver-controller.js"></script>
