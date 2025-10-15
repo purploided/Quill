@@ -90,16 +90,13 @@ const Quill = (() => { // unga bunga quill module
             spellingBee(true);
             timeLimit(timeLimitEnabled, timeLimitTime);
 
-            // Initialize DOM elements
             userInputElement = document.getElementById(uie);
             typingText = document.getElementById(tt);
             wpmElement = document.getElementById(wpmE);
             accuracyElement = document.getElementById(aceElement);
 
-            // Initialize the typing test with random text
             typingText.textContent = SpeedReference;
 
-            // Setup event listeners for the input field
             userInputElement.addEventListener('input', onTyping);
             userInputElement.addEventListener('keydown', onKeyPress);
             break;
@@ -151,7 +148,6 @@ const Quill = (() => { // unga bunga quill module
     }
     
     function onTyping() {
-        // Start the timer on first input
         if (!typingStarted) {
             startTime = new Date().getTime();
             typingStarted = true;
@@ -169,7 +165,6 @@ const Quill = (() => { // unga bunga quill module
     }
 
     function onKeyPress(event) {
-        // Handle key press events for 'Enter' and 'Escape'
         if (event.key === 'Enter' && typingStarted) {
             typingHasEnded = true;
             setTimeout(() => {
@@ -209,13 +204,10 @@ const Quill = (() => { // unga bunga quill module
         let wpm = getWPM();
         let accuracyInt = accuracy();
         leaderstats();
-        // Display the typing speed and advice
         wpmElement.textContent = `WPM: ${wpm}`;
         typingText.textContent = getAdvice(wpm);
         accuracyElement.textContent = `Accuracy: ${accuracyInt}`;
         userInputElement.value = '';
-
-        // Pause the wpm update, instead of setting it to 0
 
         typingStarted = false;
         clearInterval(updateInterval);
@@ -302,10 +294,7 @@ const Quill = (() => { // unga bunga quill module
         }, 1000);
     }
 
-    // WPM and accuracy always visible
-
     function wpmHider() {
-        // Instead of hiding, just update their text content
         setInterval(() => {
             if (typingStarted) {
                 // Optionally update live values here if needed

@@ -61,19 +61,14 @@
     <script>
         const randomText = Quill.textRandomiser(6,3);
 
-        // Quill.start("userInput", "typer", "wpm") will start the typing test
         Quill.start("userInput", "typer", "wpm", "accuracyP");
 
-        // wpm hider
         Quill.wpmHider();
 
-        // accuracy
         Quill.accuracy("accuracyP");
 
-        // leaderboard
         Quill.leaderstats();
 
-        // highlight text
         Quill.highlightText("#00a400", "#c7c7c7");
     </script>
 </body>
