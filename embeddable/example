@@ -3,7 +3,6 @@
     <script>
     window.addEventListener('load', () => { // script example
         Quill.start();
-        Quill.timedReset(true, 5000);
     });
     </script>
     <p id="typer">Press Esc to Start...</p> --> have whatever you want in the tag, needs id
