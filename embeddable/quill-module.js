@@ -30,13 +30,8 @@ const Quill = (() => { // unga bunga quill module
     let highlightColorG; // Green for correct words
     let highlightColorR; // Red for incorrect words
 
-    // Time limit variables
-    let timeLimitEnabled = false;
-    let timeLimitTime;
-
     // Spelling bee variable
     let spellingBeeEnabled = false;
-
     const words = [
         "apple", "banana", "cherry", "date", "elderberry", "fig", "grape", "honeydew", "kiwi", "lemon", "mango", "nectarine", "orange", "papaya", "quince", "raspberry", "strawberry", "tangerine", "ugli", "vanilla", "watermelon", "ximenia", "yuzu", "zucchini", // FRUITS
         "I", "you", "he", "she", "it", "we", "they", "me", "him", "her", "us", "them", "myself", "yourself", "himself", "herself", "itself", "ourselves", "yourselves", "themselves", "this", "that", "these", "those", "who", "whom", "which", "what", "whose", "whoever", "whatever", "whichever", "whomever", // PRONOUNS
@@ -88,7 +83,6 @@ const Quill = (() => { // unga bunga quill module
         switch (spellingBeeEnabled) {
             case true:
             spellingBee(true);
-            timeLimit(timeLimitEnabled, timeLimitTime);
 
             userInputElement = document.getElementById(uie);
             typingText = document.getElementById(tt);
@@ -101,7 +95,6 @@ const Quill = (() => { // unga bunga quill module
             userInputElement.addEventListener('keydown', onKeyPress);
             break;
             default:
-            timeLimit(timeLimitEnabled, timeLimitTime);
 
             userInputElement = document.getElementById(uie);
             typingText = document.getElementById(tt);
@@ -171,7 +164,6 @@ const Quill = (() => { // unga bunga quill module
                 typingHasEnded = false;
             }, 1);
             stop();
-            timedReset(cooldownEnabled, cooldownTime); 
         }
         else if (event.key === 'Escape' && !event.repeat) {
             setTimeout(() => {
@@ -180,25 +172,6 @@ const Quill = (() => { // unga bunga quill module
         }
     }
 
-    function timedReset(enabled, cooldown) {
-        if (!enabled) {
-            cooldownEnabled = false;
-            cooldownTime;
-            return;
-        }
-        else {
-            setInterval(() => {
-            if (enabled && typingHasEnded) {
-                cooldownEnabled = true;
-                cooldownTime = cooldown;
-
-                setTimeout(() => {
-                reset();
-                }, cooldown);
-            }
-        }, 1);
-        }
-    }
 
     function stop() {
         let wpm = getWPM();
@@ -274,24 +247,6 @@ const Quill = (() => { // unga bunga quill module
         console.log("WPM: " + getWPM());
         console.log("Advice: " + getAdvice(getWPM()));
 
-    }
-
-    /*
-        what should i add here to make it more customisable
-
-        -- 09/11/2024 --
-
-        i'll add a time limit for typing, itll be togglable and customisable
-    */
-
-    function timeLimit(enabled, time) {
-        setInterval(() => {
-            if (enabled && typingStarted) {
-                setTimeout(() => {
-                    stop();
-                }, time);
-            }
-        }, 1000);
     }
 
     function wpmHider() {
@@ -401,22 +356,16 @@ const Quill = (() => { // unga bunga quill module
     // making a spelling bee function, seeing how quick you type a word
 
     function spellingBee(enabled) {
-        if (enabled == true) {
-            spellingBeeEnabled = true;
+        spellingBeeEnabled = true;
 
-            // Select a random word from the array
-            const randomIndex = Math.floor(Math.random() * words.length);
-            const randomWord = words[randomIndex];
+        // Select a random word from the array
+        const randomIndex = Math.floor(Math.random() * words.length);
+        const randomWord = words[randomIndex];
 
-            console.log(randomWord);
-            SpeedReference = randomWord;
+        console.log(randomWord);
+        SpeedReference = randomWord;
 
-            return randomWord;
-        }
-        else {
-            spellingBeeEnabled = false;
-            return;
-        }
+        return randomWord;
     }
 
     // Export the functions
@@ -426,10 +375,8 @@ const Quill = (() => { // unga bunga quill module
         getWPM,
         getAdvice,
         debug,
-        timedReset,
         textRandomiser,
         highlightText,
-        timeLimit,
         wpmHider,
         accuracy,
         leaderstats,
