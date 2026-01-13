@@ -26,6 +26,9 @@ const Quill = (() => { // unga bunga quill module
     // Ace Enabled
     let aceEnabled;
 
+    // Debug
+    let debug_ = false;
+
     // Highlight colors
     let highlightColorG; // Green for correct words
     let highlightColorR; // Red for incorrect words
@@ -52,29 +55,32 @@ const Quill = (() => { // unga bunga quill module
         const randomLength = Math.floor(Math.random() * ln) + lnmodifier; // Random length between 0 and ln + lengthModifier
         const randomText = words.slice(0, randomLength).join(" ");
 
-        SpeedReference = randomText;
-        console.log(
-            `%c[Quill]:%c Randomly Generated Text:   %c"%c${SpeedReference}%c"`,
-            "color: #00bfff; font-weight: bold; font-family: Comic Sans MS;",
-            "font-family: Comic Sans MS;",
-            "color: #00bfff; font-weight: bold; font-family: Comic Sans MS;",
-            "color: #fff; background: #222; font-family: monospace; padding: 2px 6px; border-radius: 4px;",
-            "color: #00bfff; font-weight: bold; font-family: Comic Sans MS;"
-        );
-        lengthRemember = randomLength;
-        console.log(
-            "%c[Quill]:%c Average Generation Length: %c" + lengthRemember,
-            "color: #00bfff; font-weight: bold; font-family: Comic Sans MS;",
-            "font-family: Comic Sans MS;",
-            "color: #fff; background: #222; font-family: Comic Sans MS; padding: 2px 6px; border-radius: 4px;"
-        );
         lengthModifier = lnmodifier;
-        console.log(
-            "%c[Quill]:%c Length Modifier: %c" + lengthModifier,
-            "color: #00bfff; font-weight: bold; font-family: Comic Sans MS;",
-            "font-family: Comic Sans MS;",
-            "color: #fff; background: #222; font-family: Comic Sans MS; padding: 2px 6px; border-radius: 4px;"
-        );
+        lengthRemember = randomLength;
+        SpeedReference = randomText;
+
+        if (debug_ == true) {
+            console.log(
+                `%c[Quill]:%c Randomly Generated Text:   %c"%c${SpeedReference}%c"`,
+                "color: #00bfff; font-weight: bold; font-family: Comic Sans MS;",
+                "font-family: Comic Sans MS;",
+                "color: #00bfff; font-weight: bold; font-family: Comic Sans MS;",
+                "color: #fff; background: #222; font-family: monospace; padding: 2px 6px; border-radius: 4px;",
+                "color: #00bfff; font-weight: bold; font-family: Comic Sans MS;"
+            );
+            console.log(
+                "%c[Quill]:%c Average Generation Length: %c" + lengthRemember,
+                "color: #00bfff; font-weight: bold; font-family: Comic Sans MS;",
+                "font-family: Comic Sans MS;",
+                "color: #fff; background: #222; font-family: Comic Sans MS; padding: 2px 6px; border-radius: 4px;"
+            );
+            console.log(
+                "%c[Quill]:%c Length Modifier: %c" + lengthModifier,
+                "color: #00bfff; font-weight: bold; font-family: Comic Sans MS;",
+                "font-family: Comic Sans MS;",
+                "color: #fff; background: #222; font-family: Comic Sans MS; padding: 2px 6px; border-radius: 4px;"
+            );
+        }
 
         return randomText;
     }
@@ -162,7 +168,8 @@ const Quill = (() => { // unga bunga quill module
             typingHasEnded = true;
             setTimeout(() => {
                 typingHasEnded = false;
-            }, 1);
+                reset();
+            }, 3000);
             stop();
         }
         else if (event.key === 'Escape' && !event.repeat) {
@@ -233,19 +240,20 @@ const Quill = (() => { // unga bunga quill module
     }
 
     function debug(){
+        debug_ = true;
         setInterval(() => {
-            console.log("WPM: " + getWPM());
+            console.log(`%c[Quill]:%c WPM: ${getWPM()}`, "color: #00bfff; font-weight: bold; font-family: Comic Sans MS;", "font-family: Comic Sans MS;");
 
             if (typingStarted) {
-                console.log("Typing test has started.");
+                console.log("%c[Quill]:%c Typing test has started.", "color: #00bfff; font-weight: bold; font-family: Comic Sans MS;", "font-family: Comic Sans MS;");
             } else {
-                console.log("Typing test has not started yet.");
+                console.log("%c[Quill]:%c Typing test has not started yet.", "color: #00bfff; font-weight: bold; font-family: Comic Sans MS;", "font-family: Comic Sans MS;");
             }
         }, 1000);
 
-        console.log("Start time: " + startTime);
-        console.log("WPM: " + getWPM());
-        console.log("Advice: " + getAdvice(getWPM()));
+        console.log(`%c[Quill]:%c Start time: ${startTime}`, "color: #00bfff; font-weight: bold; font-family: Comic Sans MS;", "font-family: Comic Sans MS;");
+        console.log(`%c[Quill]:%c WPM: ${getWPM()}`, "color: #00bfff; font-weight: bold; font-family: Comic Sans MS;", "font-family: Comic Sans MS;");
+        console.log(`%c[Quill]:%c ${getAdvice(getWPM())}`, "color: #00bfff; font-weight: bold; font-family: Comic Sans MS;", "font-family: Comic Sans MS;");
 
     }
 
@@ -337,18 +345,20 @@ const Quill = (() => { // unga bunga quill module
 
         localStorage.setItem("leaderstats", JSON.stringify(leaderstatsParsed));
 
-        console.log(
-            "%c[Quill]:%c Best WPM: %c" + leaderstatsParsed.wpm,
-            "color: #00bfff; font-weight: bold; font-family: Comic Sans MS;",
-            "font-family: Comic Sans MS;",
-            "color: #fff; background: #222; font-family: Comic Sans MS; padding: 2px 6px; border-radius: 4px;"
-        );
-        console.log(
-            "%c[Quill]:%c Best Accuracy: %c" + leaderstatsParsed.acc + "%",
-            "color: #00bfff; font-weight: bold; font-family: Comic Sans MS;",
-            "font-family: Comic Sans MS;",
-            "color: #fff; background: #222; font-family: Comic Sans MS; padding: 2px 6px; border-radius: 4px;"
-        );
+        if (debug_ == true) {
+            console.log(
+                "%c[Quill]:%c Best WPM: %c" + leaderstatsParsed.wpm,
+                "color: #00bfff; font-weight: bold; font-family: Comic Sans MS;",
+                "font-family: Comic Sans MS;",
+                "color: #fff; background: #222; font-family: Comic Sans MS; padding: 2px 6px; border-radius: 4px;"
+            );
+            console.log(
+                "%c[Quill]:%c Best Accuracy: %c" + leaderstatsParsed.acc + "%",
+                "color: #00bfff; font-weight: bold; font-family: Comic Sans MS;",
+                "font-family: Comic Sans MS;",
+                "color: #fff; background: #222; font-family: Comic Sans MS; padding: 2px 6px; border-radius: 4px;"
+            );
+    }
 
         return leaderstatsParsed;
     }
