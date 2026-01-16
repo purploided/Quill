@@ -1,5 +1,4 @@
 const Quill = (() => { // unga bunga quill module
-    console.log("%cPowered by Quill", "color:rgb(255, 255, 255); font-weight: bold; font-size:20px; font-family:Comic Sans MS; text-shadow: 2px 2px 0 #222, 4px 4px 0 #888;");
     // Typing test variables
     let startTime; // Start time of typing test
     let typingStarted = false; // Flag to check if typing has started
@@ -33,6 +32,9 @@ const Quill = (() => { // unga bunga quill module
     let highlightColorG; // Green for correct words
     let highlightColorR; // Red for incorrect words
 
+    // timeout
+    let typingResetTimeout; 
+
     // Spelling bee variable
     let spellingBeeEnabled = false;
     const words = [
@@ -42,6 +44,10 @@ const Quill = (() => { // unga bunga quill module
         "happy", "sad", "angry", "mad", "glad", "joyful", "merry", "cheerful", "carefree", "careful", "cautious", "brave", "bold", "fearless", "daring", "courageous", "timid", "shy", "nervous", "anxious", "worried", "afraid", "scared", "frightened", "terrified", "panicked", "calm", "relaxed", "peaceful", "serene", "tranquil", "quiet", "still", "restful", "sleepy", "tired", "exhausted", "weary", "fatigued", "drained", "spent", "lazy", "idle", "sluggish", "lethargic", "drowsy", "sleepy", "dozy", "snoozy", // ADJECTIVES
         "the", "a", "an", "and", "but", "or", "for", "nor", "so", "yet", "after", "although", "as", "because", "before", "even", "if", "once", "since", "though", "unless", "until", "when", "where", "while", "both", "either", "neither", "not only", "whether", "as if", "as long as", "as soon as", "in order that", "so that" // CONJUNCTIONS
     ];
+
+    if (debug_ == true) {
+        console.log("%cPowered by Quill", "color:rgb(255, 255, 255); font-weight: bold; font-size:20px; font-family:Comic Sans MS; text-shadow: 2px 2px 0 #222, 4px 4px 0 #888;");
+    }
 
     // SpeedReference randomiser
 
@@ -120,10 +126,11 @@ const Quill = (() => { // unga bunga quill module
     }
     
     function reset() {
-        console.clear();
-        console.warn("%c[Quill]:%c Resetting typing test...", "color: #00bfff; font-weight: bold; font-family: Comic Sans MS;", "font-family: Comic Sans MS;");
-        console.clear();
-        console.log("%cPowered by Quill", "color:rgb(255, 255, 255); font-weight: bold; font-size:20px; font-family:Comic Sans MS; text-shadow: 2px 2px 0 #222, 4px 4px 0 #888;");
+        if (debug_ == true) {
+            console.warn("%c[Quill]:%c Resetting typing test...", "color: #00bfff; font-weight: bold; font-family: Comic Sans MS;", "font-family: Comic Sans MS;");
+            console.log("%cPowered by Quill", "color:rgb(255, 255, 255); font-weight: bold; font-size:20px; font-family:Comic Sans MS; text-shadow: 2px 2px 0 #222, 4px 4px 0 #888;");
+        }
+
         switch (spellingBeeEnabled) {
             case true:
                 spellingBee(true);
@@ -166,19 +173,20 @@ const Quill = (() => { // unga bunga quill module
     function onKeyPress(event) {
         if (event.key === 'Enter' && typingStarted) {
             typingHasEnded = true;
-            setTimeout(() => {
+            
+            clearTimeout(typingResetTimeout); 
+            
+            typingResetTimeout = setTimeout(() => {
                 typingHasEnded = false;
                 reset();
             }, 3000);
             stop();
         }
         else if (event.key === 'Escape' && !event.repeat) {
-            setTimeout(() => {
+            clearTimeout(typingResetTimeout);
             reset();
-            }, 300);
         }
     }
-
 
     function stop() {
         let wpm = getWPM();
