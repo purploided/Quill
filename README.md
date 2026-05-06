@@ -1,3 +1,7 @@
+[![License: PolyForm Noncommercial 1.0.0](https://img.shields.io/badge/license-PolyForm%20Noncommercial%201.0.0-blue)](https://polyformproject.org/licenses/noncommercial/1.0.0/)
+
+---
+
 <p align="center">
   <img width="200px" src="https://raw.githubusercontent.com/purploided/Quill/refs/heads/main/assets/images/quilliconnew.png">
 </p>
@@ -11,8 +15,8 @@ This powerful web-based tool<sub> — now available as a module too!</sub> helps
 
 ## 🚀 Features
 
-- **Typing Exercises** – Enhance your typing skills through varied and engaging challenges.  
-- **Performance Tracking** – Monitor your speed and accuracy in real time.
+* **Typing Exercises** – Enhance your typing skills through varied and engaging challenges.
+* **Performance Tracking** – Monitor your speed and accuracy in real time.
 
 ---
 
@@ -29,7 +33,7 @@ This powerful web-based tool<sub> — now available as a module too!</sub> helps
 
 To embed and use the Quill module, include the following in your HTML:
 
-```html
+```html id="x1ab9k"
 <script src="https://api.purploid.xyz/quill-module.js"></script>
 ```
 
@@ -41,11 +45,22 @@ To embed and use the Quill module, include the following in your HTML:
 
 The `Quill` module is a self-invoking function that implements a typing test application. It:
 
-- Tracks user input
-- Calculates words per minute (WPM)
-- Provides real-time feedback
-- Resets the test after a cooldown period
+* Tracks user input
+* Calculates words per minute (WPM)
+* Provides real-time feedback
+* Resets the test after a cooldown period
 
 ---
 
 ## 📚 [View the Wiki](https://github.com/purploided/Quill/wiki)
+
+---
+
+## 📄 License
+
+This project is licensed under the **PolyForm Noncommercial License 1.0.0**.
+
+* ✅ Free for personal and non-commercial use
+* ❌ Commercial use is not permitted
+
+See the [LICENSE](./LICENSE) file for full terms.
