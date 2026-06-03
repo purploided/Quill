@@ -58,6 +58,8 @@
 
     <script src="/embeddable/quill-module.js"></script>
     <script>
+        Quill.debug();
+
         const randomText = Quill.textRandomiser(6,3);
 
         Quill.start("userInput", "typer", "wpm", "accuracyP");

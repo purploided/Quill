@@ -37,6 +37,16 @@ const Quill = (() => { // unga bunga quill module
 
     // Spelling bee variable
     let spellingBeeEnabled = false;
+
+    /*
+        04/06/2026
+    working on a catch system so you can't just press enter and get the fastest wpm
+    */
+
+    // catch
+    let lastTargetWord = ""; 
+
+
     const words = [
         "apple", "banana", "cherry", "date", "elderberry", "fig", "grape", "honeydew", "kiwi", "lemon", "mango", "nectarine", "orange", "papaya", "quince", "raspberry", "strawberry", "tangerine", "ugli", "vanilla", "watermelon", "ximenia", "yuzu", "zucchini", // FRUITS
         "I", "you", "he", "she", "it", "we", "they", "me", "him", "her", "us", "them", "myself", "yourself", "himself", "herself", "itself", "ourselves", "yourselves", "themselves", "this", "that", "these", "those", "who", "whom", "which", "what", "whose", "whoever", "whatever", "whichever", "whomever", // PRONOUNS
@@ -44,6 +54,8 @@ const Quill = (() => { // unga bunga quill module
         "happy", "sad", "angry", "mad", "glad", "joyful", "merry", "cheerful", "carefree", "careful", "cautious", "brave", "bold", "fearless", "daring", "courageous", "timid", "shy", "nervous", "anxious", "worried", "afraid", "scared", "frightened", "terrified", "panicked", "calm", "relaxed", "peaceful", "serene", "tranquil", "quiet", "still", "restful", "sleepy", "tired", "exhausted", "weary", "fatigued", "drained", "spent", "lazy", "idle", "sluggish", "lethargic", "drowsy", "sleepy", "dozy", "snoozy", // ADJECTIVES
         "the", "a", "an", "and", "but", "or", "for", "nor", "so", "yet", "after", "although", "as", "because", "before", "even", "if", "once", "since", "though", "unless", "until", "when", "where", "while", "both", "either", "neither", "not only", "whether", "as if", "as long as", "as soon as", "in order that", "so that" // CONJUNCTIONS
     ];
+
+    // 04/06/2026 -- log function
 
     if (debug_ == true) {
         console.log("%cPowered by Quill", "color:rgb(255, 255, 255); font-weight: bold; font-size:20px; font-family:Comic Sans MS; text-shadow: 2px 2px 0 #222, 4px 4px 0 #888;");
@@ -64,6 +76,9 @@ const Quill = (() => { // unga bunga quill module
         lengthModifier = lnmodifier;
         lengthRemember = randomLength;
         SpeedReference = randomText;
+
+        const generatedWordsArray = SpeedReference.split(" ");
+        lastTargetWord = generatedWordsArray[generatedWordsArray.length - 1];
 
         if (debug_ == true) {
             console.log(
@@ -170,10 +185,23 @@ const Quill = (() => { // unga bunga quill module
         }, 10);  
     }
 
+    // 04/06/2026 -- edited w/ the help of gemini
+
     function onKeyPress(event) {
         if (event.key === 'Enter' && typingStarted) {
+            const currentTypedText = event.target.value ? event.target.value.trim() : "";
+            const isFinished = currentTypedText === SpeedReference;
+
+            if (!isFinished) {
+                event.preventDefault();
+
+                if(debug_ == true) {
+                    console.error("%c[Quill]:%c You haven't finished the test!", "color: #ff0000; font-weight: bold; font-family: Comic Sans MS;", "font-family: Comic Sans MS;")
+                }
+                return;
+            }
+
             typingHasEnded = true;
-            
             clearTimeout(typingResetTimeout); 
             
             typingResetTimeout = setTimeout(() => {
