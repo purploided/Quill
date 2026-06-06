@@ -45,6 +45,7 @@ const Quill = (() => { // unga bunga quill module
 
     // catch
     let lastTargetWord = ""; 
+    let catch__ = false;
 
 
     const words = [
@@ -192,7 +193,7 @@ const Quill = (() => { // unga bunga quill module
             const currentTypedText = event.target.value ? event.target.value.trim() : "";
             const isFinished = currentTypedText === SpeedReference;
 
-            if (!isFinished) {
+            if (!isFinished && catch__ == true) {
                 event.preventDefault();
 
                 if(debug_ == true) {
@@ -214,6 +215,10 @@ const Quill = (() => { // unga bunga quill module
             clearTimeout(typingResetTimeout);
             reset();
         }
+    }
+
+    function catch_() { // 06/06/26 -- catch made togglable
+        catch__ = true;
     }
 
     function stop() {
@@ -296,18 +301,18 @@ const Quill = (() => { // unga bunga quill module
     function wpmHider() {
         setInterval(() => {
             if (typingStarted) {
-                // Optionally update live values here if needed
+                
             }
         }, 10);
 
         if (aceEnabled == true) {
             setInterval(() => {
                 if (typingStarted) {
-                    // Optionally update accuracy live here if needed
+                    
                 }
             }, 10);
         }
-        // Ensure elements are always visible
+        
         if (wpmElement) wpmElement.style.display = "block";
         if (accuracyElement) accuracyElement.style.display = "block";
     }
@@ -360,7 +365,6 @@ const Quill = (() => { // unga bunga quill module
         return "0%";
     }
     
-    // Local Best WPM and Accuracy
     function leaderstats() {
         let currentWpm = getWPM();
         let currentAcc = accuracy();
@@ -414,7 +418,6 @@ const Quill = (() => { // unga bunga quill module
         return randomWord;
     }
 
-    // Export the functions
     return {
         start,
         reset,
@@ -426,6 +429,7 @@ const Quill = (() => { // unga bunga quill module
         wpmHider,
         accuracy,
         leaderstats,
-        spellingBee
+        spellingBee,
+        catch_
     };
 })();
